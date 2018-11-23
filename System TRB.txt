@@ -1,0 +1,102 @@
+﻿TRB jest zmodyfikowaną kombinacją BEM I obiektowo zorientowanego CSS (OOCSS). Modyfikacje usprawniają zarządzanie bardzo dużą ilością serwisów zarządzanych z poziomu CMS. Dotyczą one jak i nazewnictwa (BEM) tak i OOCSS. Mają na celu usprawnić komunikację między HTML i CSS oraz uelastycznić kod co pomoże go zabezpieczyć przed ingerencją z zewnątrz poprzez CMS
+
+
+1. Terminologia
+   1. Obiekt
+   2. Element obiektu
+   3. Modyfikator
+   4. Deklaracje
+1. Budowanie HTML
+   1. Formatowanie
+   2. Klasowanie tagów
+   3. Komentarze
+   4. Przykład
+1. Budowanie CSS
+   1. Formatowanie
+   2. Komentarze
+   3. Dodatki
+   4. Przykład
+
+
+Terminologia
+Sposób definiowania pojęć potrzebnych do prawidłowego zrozumienia oraz implementowania systemu TRB
+
+
+Obiekt
+Autonomiczny element zbudowany z HTML i CSS, który może występować w każdym miejscu layoutu bez zmiany swojej struktury. Posiada swoje unikalne nazewnictwo. Nie powinno ono zawierać żadnych znaków szczególnych np. .block. Jeśli chcemy zawrzeć więcej informacji co do bloczka, łączymy słowa w sposób camelCase np. .blockExtra
+
+
+Element obiektu
+Składowa część obiektu, która jest samodzielnym elementem z własnymi właściwościami. Nie może występować poza swoim obiektem. Dobrym przykładem są inputy w formularzu. Są one samodzielne i posiadają swoje własne unikalne wartości ale muszą występować w obiekcie form. Tworzenie klas odbywa się poprzez dodanie po nazwie obiektu do którego należy, dwóch podkreślników (__) oraz kolejnej nazwy określającej np. .block__element. Tworzenie nazwy dla elementu jest obłożone takimi samymi restrykcjami jak i tworzenie nazwy dla obiektu, np. .block__elementExtra.
+
+
+Modyfikator
+Cecha wyróżniająca obiekt lub jego element spośród innych tego samego typu. Może określać jego wygląd położenie czy jakiekolwiek inne cechy. Modyfikator tworzymy poprzez dodanie dwóch myślników (--) oraz nazwy określającej modyfikator np. .block--first, lub .block__element--first. Ograniczenia przy tworzeniu nazw modyfikatorów obowiązują takie same jak przy obiektach i elementach.
+
+
+Deklaracje
+Suma cech obiektu/elementu/modyfikatora definiująca go i zawarta w CSS pomiędzy klamrami, {deklaracja:...}.
+
+
+Budowanie HTML
+Przy tworzeniu HTML w TRB nie korzystamy z ID, ponieważ ogranicza i zawęża uniwersalność komponentów. 
+
+
+Formatowanie
+Klasy dodajemy zaraz po tagu (<a class=”block” href=”#”>). Piszemy je w jednej linii oddzielone jedną spacją. Jako podstawę tworzenia klas używamy języka angielskiego (znaki języka polskiego nie są czytane a nie używanie polskich znaków przy polskich słowach może powodować niejasność semantyczną). Stosujemy tylko małe litery.
+
+
+Klasowanie tagów
+W TRB nie ma ścisłego nakazu dodawania klasy do każdego tagu, ale zaleca się otaczać każdy tag divem z klasą. 
+
+
+Komentarze
+Każdy obiekt w HTML powinien być oddzielony komentarzem blokowym <!-- -- > w którym powinna być nazwa obiektu a jeśli istnieje taka potrzeba inne informacje szczegółowe. Należy zauważyć, że nazwa obiektu w komentarzu nie musi być taka sama jak jego klasa.
+
+
+Przykład
+HTML
+<!--social-->
+<div class=”block”>
+  <div class=”block__element”>
+  </div>
+  <div class=”block__element block__element--wide”>
+    <p>...</p>
+  </div>
+</div> 
+
+
+Budowanie CSS
+W TRB nie powinno się zagnieżdżać głębiej niż do trzech elementów (im większe zagęszczenie tym mniejsza uniwersalność), chyba że ostatni element jest czystym tagiem, na przykład 
+.block .block__element .block__title .block__link ŹLE
+.block .block__element .block__title p DOBRZE
+Nie stosujemy !important i unikamy pisania skróconych deklaracji np. background: #fff, tylko background-color: #fff ponieważ takie skracanie nadpisuje inne wartości np. background-image.
+Przy zerowaniu wartości nie określamy jej wartości tj. padding: 0; a nie padding: 0px;
+
+
+Formatowanie
+Klamra kończąca powinna być we własnej linii. Przed pierwszą klamrą powinna być spacja. Każda deklaracja powinna być podana w osobnej linii. Jeżeli podpinamy pod deklarację kilka klas to każda powinna być w osobnej linii. Spacja po : w deklaracjach. Nie łączymy tagów HTML z klasami np. div.block.
+
+
+Komentarze
+Wszystkie deklaracje dla jednego obiektu powinny być otoczone komentarzem którego treść powinna odpowiadać treści komentarza HTML dla tego bloczka plus ewentualne uszczegółowienia. Treść komentarza powinna być we własnej po linii.
+
+
+Dodatki
+W TRB, gdy deklarujemy wielkość czcionki to powinniśmy także deklarować jej line-height najlepiej w postaci punktowej lub procentowej (1.2 lub 120%). Padding i margin nie wolno deklarować w jego wersji trzech warunków tj. padding: 0 0 7px; .
+
+
+Przykład
+CSS
+/*Social*/
+.block {
+          deklaracja: ....
+}
+.block .block__element {
+          deklaracja: ....
+}
+.block .block__element--wide,
+.block .block__element--narrow {
+          deklaracja: ....
+}
+/*Social*/
